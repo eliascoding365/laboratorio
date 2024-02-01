@@ -6,7 +6,8 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <Link href='/inicio'>Ir para inicio</Link>
-        <Link href='/form'>Ir para form</Link>
+        <Link href='/login'>Ir para login</Link>
+        <Link href='/forms'> Ir a forms</Link>
       </div>
     </main>
   )

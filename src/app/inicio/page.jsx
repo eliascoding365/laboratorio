@@ -4,11 +4,11 @@
   import axios from 'axios'
   import Link from 'next/link'
 
-  const Component = () => {
+  const ViewUser = (item) => {
     const [data, setData] = useState([]);
     const handleFetch = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/user')
+        const response = await axios.get('http://127.0.0.1:8000/users')
         setData(response.data)
         console.log(response)
       } catch (error) {
@@ -21,20 +21,21 @@
     }, [] );
     return (
       <>
+        <div>
+          
         <h1>Api:</h1>
         {data.map ((item)=> (
           <div key={item.id}>
             <div >
-              <p>User:{item.name}</p>
+              <p >User:{item.name}</p>
             </div>
             <div >
-              <p>password:{item.password}</p>
-            </div>
-            <div >
+              <p >password:{item.password}</p>
             </div>
             <br/>
           </div>
         ))}
+        </div>
       </>
     )
   }
@@ -53,7 +54,7 @@
         >Ver
         
         </button>
-        {isVisible && <Component /> }
+        {isVisible && <ViewUser /> }
         </div>
       </>
     )

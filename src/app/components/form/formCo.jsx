@@ -1,22 +1,27 @@
-import DateDropDown from '../date/dateCo'
-import React, { useState } from 'react'
-import BtnEnviaForm from '../btnEnvia/button'
+import DateDropDown from '../date/dateCo';
+import React, { useState } from 'react';
+import BtnEnviaForm from '../btnEnvia/button';
+
 const Forme = () => {
-  
   const [formData, setFormData] = useState({
-    nomeIdoso: "",
-    dataNascIdoso: "",})
+    nomeIdoso: '',
+    dataNascIdoso: '',
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = /*await api.post('/cartao-idoso',)*/ {
+      // Aqui você pode enviar os dados do formulário, incluindo a dataNascIdoso, para o servidor
+      const response = /* await api.post('/cartao-idoso', formData) */ {
         dataNasc: formData.dataNascIdoso,
-        nome: formData.nomeIdoso
-      }; console.log(response)
-  }catch (error){
-    console.log(error)
-  }} 
+        nome: formData.nomeIdoso,
+      };
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -24,6 +29,7 @@ const Forme = () => {
       [name]: value,
     });
   };
+
   // Função para lidar com a submissão da data
   const handleDateSubmit = (dateValues) => {
     // Atualize o estado com o valor da data
@@ -31,22 +37,25 @@ const Forme = () => {
       ...prevData,
       dataNascIdoso: dateValues.date, // Assumindo que 'date' contém a data no formato desejado
     }));
-
     console.log('Valores da data recebidos:', dateValues);
   };
 
   return (
     <div>
-      {/* Passe a função handleDateSubmit como prop para DateDropDown */}
-      <form
-      onSubmit={handleSubmit}
-      >
-        <DateDropDown onSubmit={handleDateSubmit} />
-        <input type="text" 
-        name='nomeIdoso'
-        onChange={handleInputChange}
+      <form onSubmit={handleSubmit}>
+        {/* Passe a função handleDateSubmit como prop para DateDropDown */}
+        <DateDropDown onSubmit={handleDateSubmit} value={formData.dataNascIdoso} />
+
+        <input
+          type="text"
+          name="nomeIdoso"
+          onChange={handleInputChange}
+          value={formData.nomeIdoso}
+          placeholder="Nome do Idoso"
         />
-        <BtnEnviaForm onChange={handleInputChange} />
+
+        {/* Passe a função handleSubmit como prop para BtnEnviaForm */}
+        <BtnEnviaForm onSubmit={handleSubmit} />
       </form>
     </div>
   );

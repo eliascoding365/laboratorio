@@ -10,18 +10,20 @@ const DateDropDown = ({ onSubmit }) => {
 
   const handleInputChangeSelect = (e, fieldName) => {
     e.preventDefault();
+    e.target.value
     const value = e.target.value;
     setFormData((prevData) => ({ ...prevData, [fieldName]: value }));
   };
 
   const DiaDropdown = () => {
-    const dias = Array.from({ length: 31 }, (_, index) => index + 1);
+    const dias = Array.from({ length: 31 }, (_, index) => (index + 1).toString().padStart(2, '0'));
 
     return (
       <>
         <select
           className={styles.selectBox}
           onChange={(e) => handleInputChangeSelect(e, 'dia')}
+          value={formData.dia}
         >
           <option value="">Dia</option>
           {dias.map((dia) => (
@@ -35,12 +37,13 @@ const DateDropDown = ({ onSubmit }) => {
   };
 
   const MesDropdown = () => {
-    const meses = Array.from({ length: 12 }, (_, index) => index + 1);
+    const meses = Array.from({ length: 12 }, (_, index) => (index + 1).toString().padStart(2, '0'));
 
     return (
       <>
         <select
           className={styles.selectBox}
+          value={formData.mes}
           onChange={(e) => handleInputChangeSelect(e, 'mes')}
         >
           <option value="">Mês</option>
@@ -62,9 +65,10 @@ const DateDropDown = ({ onSubmit }) => {
       <>
         <select
           className={styles.selectBox}
+          value={formData.ano}
           onChange={(e) => handleInputChangeSelect(e, 'ano')}
         >
-          <option value="">Ano</option>
+          <option >Ano</option>
           {anos.map((ano) => (
             <option key={ano} value={ano}>
               {ano}
@@ -77,8 +81,14 @@ const DateDropDown = ({ onSubmit }) => {
 
   return (
     <div className='w-52'>
-      <DiaDropdown />
-      <MesDropdown />
+      <DiaDropdown
+      
+      />
+      <MesDropdown onChange={()=> {
+        const response = {
+          month: formData.mes};
+          onSubmit(response)}}
+          />
       <AnoDropdown />
       <button
         onClick={() => {

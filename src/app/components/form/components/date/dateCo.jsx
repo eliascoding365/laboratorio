@@ -10,7 +10,6 @@ const DateDropDown = ({ onSubmit }) => {
 
   const handleInputChangeSelect = (e, fieldName) => {
     e.preventDefault();
-    e.target.value
     const value = e.target.value;
     setFormData((prevData) => ({ ...prevData, [fieldName]: value }));
   };
@@ -22,8 +21,14 @@ const DateDropDown = ({ onSubmit }) => {
       <>
         <select
           className={styles.selectBox}
-          onChange={(e) => handleInputChangeSelect(e, 'dia')}
           value={formData.dia}
+          onChange={(e) => {
+            handleInputChangeSelect(e, 'dia');
+            const response = {
+              dia: e.target.value
+            };
+            onSubmit(response);
+          }}
         >
           <option value="">Dia</option>
           {dias.map((dia) => (
@@ -44,7 +49,13 @@ const DateDropDown = ({ onSubmit }) => {
         <select
           className={styles.selectBox}
           value={formData.mes}
-          onChange={(e) => handleInputChangeSelect(e, 'mes')}
+          onChange={(e) => {
+            handleInputChangeSelect(e, 'mes');
+            const response = {
+              mes: e.target.value
+            };
+            onSubmit(response);
+          }}
         >
           <option value="">Mês</option>
           {meses.map((mes) => (
@@ -66,9 +77,15 @@ const DateDropDown = ({ onSubmit }) => {
         <select
           className={styles.selectBox}
           value={formData.ano}
-          onChange={(e) => handleInputChangeSelect(e, 'ano')}
+          onChange={(e) => {
+            handleInputChangeSelect(e, 'ano');
+            const response = {
+              ano: e.target.value
+            };
+            onSubmit(response);
+          }}
         >
-          <option >Ano</option>
+          <option>Ano</option>
           {anos.map((ano) => (
             <option key={ano} value={ano}>
               {ano}
@@ -81,31 +98,9 @@ const DateDropDown = ({ onSubmit }) => {
 
   return (
     <div className='w-52'>
-      <DiaDropdown
-      
-      />
-      <MesDropdown onChange={()=> {
-        const response = {
-          month: formData.mes};
-          onSubmit(response)}}
-          />
+      <DiaDropdown />
+      <MesDropdown />
       <AnoDropdown />
-      <button
-        onClick={() => {
-          const response = {
-            day: formData.dia,
-            month: formData.mes,
-            year: formData.ano,
-            date: formData.dia + formData.mes + formData.ano,
-          };
-          console.log(response);
-
-          // Chame a função onSubmit e passe os valores da data
-          onSubmit(response);
-        }}
-      >
-        Mostrar Valores
-      </button>
     </div>
   );
 };

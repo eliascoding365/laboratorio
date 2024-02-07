@@ -1,36 +1,28 @@
+// Formulario.js
 import React, { useState } from 'react';
-import DateDropDown from './components/date/dateCo'; // Supondo que o arquivo esteja no mesmo diretório
+import DateDropDown from './components/date/dateCo';
 
 const Formulario = () => {
   const [formData, setFormData] = useState({
-    dataNasc: {
-      dia: '',
-      mes: '',
-      ano: ''
-    }
+    dia: '',
+    mes: '',
+    ano: ''
   });
 
-  const handleDateSubmit = ({ dia, mes, ano }) => {
-    setFormData(prevData => ({
-      ...prevData,
-      dataNasc: {
-        ...prevData.dataNasc,
-        dia,
-        mes,
-        ano
-      }
-    }));
+  const handleDateChange = (data) => {
+    setFormData(data);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Dados do formulário:', formData);
+    console.log('Form data:', formData);
+    // Here you can do whatever you want with the form data
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <DateDropDown onSubmit={handleDateSubmit} />
-      <button type="submit">Enviar</button>
+      <DateDropDown onChange={handleDateChange} />
+      <button type="submit">Submit</button>
     </form>
   );
 };

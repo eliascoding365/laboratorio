@@ -1,106 +1,56 @@
 import React, { useState } from 'react';
 import styles from './date.module.css';
+// DateDropDown.js
 
-const DateDropDown = ({ onSubmit }) => {
+const DateDropDown = ({ onChange }) => {
   const [formData, setFormData] = useState({
     dia: '',
     mes: '',
-    ano: '',
+    ano: ''
   });
 
-  const handleInputChangeSelect = (e, fieldName) => {
-    e.preventDefault();
-    const value = e.target.value;
-    setFormData((prevData) => ({ ...prevData, [fieldName]: value }));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+    // Send the updated formData back to the parent component
+    onChange({ ...formData, [name]: value }); // Using the latest state
   };
 
-  const DiaDropdown = () => {
-    const dias = Array.from({ length: 31 }, (_, index) => (index + 1).toString().padStart(2, '0'));
-
-    return (
-      <>
-        <select
-          className={styles.selectBox}
-          value={formData.dia}
-          onChange={(e) => {
-            handleInputChangeSelect(e, 'dia');
-            const response = {
-              dia: e.target.value
-            };
-            onSubmit(response);
-          }}
-        >
-          <option value="">Dia</option>
-          {dias.map((dia) => (
+  return (
+    <div>
+      <select name="dia" value={formData.dia} onChange={handleChange}>
+        <option value="">Dia</option>
+        {/* Options for days */}
+        {Array.from({ length: 31 }, (_, index) => (index + 1).toString().padStart(2, '0'))
+          .map((dia) => (
             <option key={dia} value={dia}>
               {dia}
             </option>
           ))}
-        </select>
-      </>
-    );
-  };
-
-  const MesDropdown = () => {
-    const meses = Array.from({ length: 12 }, (_, index) => (index + 1).toString().padStart(2, '0'));
-
-    return (
-      <>
-        <select
-          className={styles.selectBox}
-          value={formData.mes}
-          onChange={(e) => {
-            handleInputChangeSelect(e, 'mes');
-            const response = {
-              mes: e.target.value
-            };
-            onSubmit(response);
-          }}
-        >
-          <option value="">Mês</option>
-          {meses.map((mes) => (
+      </select>
+      <select name="mes" value={formData.mes} onChange={handleChange}>
+        <option value="">Mês</option>
+        {/* Options for months */}
+        {Array.from({ length: 12 }, (_, index) => (index + 1).toString().padStart(2, '0'))
+          .map((mes) => (
             <option key={mes} value={mes}>
               {mes}
             </option>
           ))}
-        </select>
-      </>
-    );
-  };
-
-  const AnoDropdown = () => {
-    const anoAtual = new Date().getFullYear();
-    const anos = Array.from({ length: anoAtual - 1900 }, (_, index) => anoAtual - index);
-
-    return (
-      <>
-        <select
-          className={styles.selectBox}
-          value={formData.ano}
-          onChange={(e) => {
-            handleInputChangeSelect(e, 'ano');
-            const response = {
-              ano: e.target.value
-            };
-            onSubmit(response);
-          }}
-        >
-          <option>Ano</option>
-          {anos.map((ano) => (
+      </select>
+      <select name="ano" value={formData.ano} onChange={handleChange}>
+        <option value="">Ano</option>
+        {/* Options for years */}
+        {Array.from({ length: new Date().getFullYear() - 1900 }, (_, index) => new Date().getFullYear() - index)
+          .map((ano) => (
             <option key={ano} value={ano}>
               {ano}
             </option>
           ))}
-        </select>
-      </>
-    );
-  };
-
-  return (
-    <div className='w-52'>
-      <DiaDropdown />
-      <MesDropdown />
-      <AnoDropdown />
+      </select>
     </div>
   );
 };

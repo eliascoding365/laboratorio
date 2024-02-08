@@ -20,7 +20,7 @@ const DateDropDown = ({ onChange }) => {
   };
 
   return (
-    <div>
+    <div className='selectBox p-5 w-full rounded-lg border border-black bg-transparent'> 
       <select name="dia" value={formData.dia} onChange={handleChange}>
         <option value="">Dia</option>
         {/* Options for days */}
